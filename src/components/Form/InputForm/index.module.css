@@ -1,0 +1,40 @@
+.container {
+  margin-bottom: 15px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.date_wrapper {
+  width: 100%;
+}
+
+.input,
+.date {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 1rem;
+}
+
+.input:focus,
+.date:focus {
+  outline-color: #007bff;
+}
+
+.date_container {
+  position: relative;
+}
+
+.image {
+  position: absolute;
+  top: 45%;
+  bottom: 55%;
+  right: 10px;
+  margin: auto;
+  height: 1.5rem;
+}
