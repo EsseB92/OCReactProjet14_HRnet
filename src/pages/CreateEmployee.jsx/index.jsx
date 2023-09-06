@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { InputForm } from "../../components/Form/InputForm";
 import IdCard from "../../assets/id-card.svg";
 import LocationDot from "../../assets/location-dot.svg";
 import Briefcase from "../../assets/briefcase.svg";
 import { departments } from "../../data/departments";
 import { states } from "../../data/states";
+import { addEmployee } from "../../features/employees/employeesSlice";
 
 import styles from "./index.module.css";
+import { Link } from "react-router-dom";
 
 const optionsStates = states.map((state) => ({
   value: state.abbreviation,
@@ -19,6 +22,9 @@ const optionsDepartments = departments.map((department) => ({
 }));
 
 const CreateEmployee = () => {
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees.employees);
+
   const [employee, setEmployee] = useState({
     firstName: "",
     lastName: "",
@@ -31,25 +37,47 @@ const CreateEmployee = () => {
     department: "",
   });
 
-  const updateEmployee = (employeeKey, value) => {
-    setEmployee({
-      ...employee,
-      [employeeKey]: value,
-    });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    console.log(employee);
+    const id =
+      employees.reduce(
+        (max, employee) => (employee.id > max ? employee.id : max),
+        employees[0].id
+      ) + 1;
+    const employeeData = {
+      id: id,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      birthDate: new Intl.DateTimeFormat("en-US").format(employee.birthDate),
+      street: employee.street,
+      city: employee.city,
+      state: employee.state.value,
+      zipCode: employee.zipCode,
+      startDate: new Intl.DateTimeFormat("en-US").format(employee.startDate),
+      department: employee.department.value,
+    };
+    dispatch(addEmployee(employeeData));
+    setEmployee({
+      id: 0,
+      firstName: "",
+      lastName: "",
+      birthDate: null,
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      startDate: null,
+      department: "",
+    });
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>HRnet</h1>
-      <a href="currentEmployee" className={styles.link}>
+      <Link to="/currentEmployee" relative="path" className={styles.link}>
         View current Employees
-      </a>
+      </Link>
+
       <h2 className={styles.subtitle}>Create Employee</h2>
 
       <hr className={styles.hr}></hr>
@@ -63,20 +91,24 @@ const CreateEmployee = () => {
         <InputForm
           label="First name"
           value={employee.firstName}
-          onChange={(e) => updateEmployee("firstName", e.target.value)}
+          onChange={(e) =>
+            setEmployee({ ...employee, firstName: e.target.value })
+          }
           autocomplete="given-name"
         />
         <InputForm
           label="Last name"
           value={employee.lastName}
-          onChange={(e) => updateEmployee("lastName", e.target.value)}
+          onChange={(e) =>
+            setEmployee({ ...employee, lastName: e.target.value })
+          }
           autocomplete="family-name"
         />
         <InputForm
           label="Date of Birth"
           type="date"
-          value={employee.birthDate}
-          onChange={(date) => updateEmployee("birthDate", date)}
+          value={employee.birthDate || ""}
+          onChange={(date) => setEmployee({ ...employee, birthDate: date })}
           autocomplete="bday"
         />
 
@@ -90,13 +122,13 @@ const CreateEmployee = () => {
         <InputForm
           label="Street"
           value={employee.street}
-          onChange={(e) => updateEmployee("street", e.target.value)}
+          onChange={(e) => setEmployee({ ...employee, street: e.target.value })}
           autocomplete="street-address"
         />
         <InputForm
           label="City"
           value={employee.city}
-          onChange={(e) => updateEmployee("city", e.target.value)}
+          onChange={(e) => setEmployee({ ...employee, city: e.target.value })}
           autocomplete="address-level2"
         />
         <InputForm
@@ -104,13 +136,17 @@ const CreateEmployee = () => {
           type="select"
           options={optionsStates}
           value={employee.state}
-          onChange={(selectedOption) => updateEmployee("state", selectedOption)}
+          onChange={(selectedOption) =>
+            setEmployee({ ...employee, state: selectedOption })
+          }
           autocomplete="address-level1"
         />
         <InputForm
           label="Zip Code"
           value={employee.zipCode}
-          onChange={(e) => updateEmployee("zipCode", e.target.value)}
+          onChange={(e) =>
+            setEmployee({ ...employee, zipCode: e.target.value })
+          }
           autocomplete="postal-code"
         />
 
@@ -120,11 +156,10 @@ const CreateEmployee = () => {
           <img className={styles.image} src={Briefcase} alt="" />
           <h3 className={styles.part_title}>Employement</h3>
         </div>
-
         <InputForm
           label="Start Date"
           value={employee.startDate}
-          onChange={(date) => updateEmployee("startDate", date)}
+          onChange={(date) => setEmployee({ ...employee, startDate: date })}
           type="date"
         />
         <InputForm
@@ -132,10 +167,11 @@ const CreateEmployee = () => {
           type="select"
           selected={employee.department}
           onChange={(selectedOption) =>
-            updateEmployee("department", selectedOption)
+            setEmployee({ ...employee, department: selectedOption })
           }
           options={optionsDepartments}
         />
+
         <button className={styles.submit} type="submit">
           Save
         </button>
