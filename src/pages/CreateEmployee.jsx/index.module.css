@@ -33,7 +33,7 @@
 
 .title_part_container {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 10px;
   margin-bottom: 20px;
 }
