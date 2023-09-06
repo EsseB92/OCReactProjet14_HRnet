@@ -1,0 +1,47 @@
+.container {
+  width: 1200px;
+  min-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  vertical-align: middle;
+}
+
+.title {
+  font-size: 28px;
+  margin-top: 0;
+  text-align: center;
+}
+
+.search {
+  position: relative;
+  height: 3rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.icon {
+  height: 1.5rem;
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 1rem;
+  width: 30%;
+  min-width: 200px;
+}
+
+.link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #007bff;
+}
