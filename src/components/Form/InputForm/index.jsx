@@ -14,7 +14,7 @@ export const InputForm = ({
   options,
   onChange,
   value,
-  placeholder = "test",
+  placeholder,
 }) => {
   const renderInput = () => {
     switch (type) {
@@ -38,6 +38,12 @@ export const InputForm = ({
             onChange={onChange}
             placeholder={placeholder}
             isSearchable
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                cursor: "pointer",
+              }),
+            }}
           />
         );
       case "date":

@@ -18,6 +18,7 @@ export const Table = ({ columns, data, setSelectedRows }) => {
       selectableRows
       onSelectedRowsChange={handleRowSelected}
       pagination
+      responsive
     />
   );
 };
