@@ -1,9 +1,12 @@
 .container {
-  max-width: 400px;
+  flex-direction: column;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+  border-radius: 5px;
+  color: #777777;
 }
 
 .title {
@@ -17,13 +20,18 @@
   text-align: center;
   margin-top: 10px;
   text-decoration: none;
-  color: #007bff;
+  color: #000eee;
 }
 
 .subtitle {
   font-size: 24px;
   margin-top: 20px;
   text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
 }
 
 .image {
@@ -35,12 +43,19 @@
   display: flex;
   align-items: stretch;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .part_title {
   font-size: 20px;
   margin: 0;
+}
+
+.span_error {
+  display: block;
+  padding: 5px;
+  color: #ff0000;
+  font-size: 14px;
 }
 
 .hr {
@@ -49,9 +64,16 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   width: 200px;
-  /* border-width: 10px; */
 }
 
 .submit {
-  margin: auto;
+  display: block;
+  align-self: center;
+  width: 200px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #040d12;
+  color: #fff;
+  cursor: pointer;
 }

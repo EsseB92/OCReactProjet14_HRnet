@@ -1,5 +1,5 @@
 .container {
-  margin-bottom: 15px;
+  margin-top: 5px;
 }
 
 .label {
@@ -10,6 +10,14 @@
 
 .date_wrapper {
   width: 100%;
+}
+
+.input {
+  cursor: text;
+}
+
+.date {
+  cursor: pointer;
 }
 
 .input,
