@@ -1,4 +1,6 @@
-html {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -6,5 +8,16 @@ body {
   margin: 0;
   background-color: #040d12;
   /* background-color: #fff; */
-  padding: 20px;
+  /* padding: 20px; */
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+}
+
+.closingBtn:hover {
+  filter: invert(24%) sepia(99%) saturate(7065%) hue-rotate(359deg)
+    brightness(95%) contrast(114%);
 }
