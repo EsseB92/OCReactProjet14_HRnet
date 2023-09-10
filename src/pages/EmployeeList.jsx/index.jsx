@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Table from "../../components/Table";
 import styles from "./index.module.css";
 import Search from "../../assets/search.svg";
+import Trash from "../../assets/trash.svg";
 import { deleteEmployees } from "../../features/employees/employeesSlice";
 import { Link } from "react-router-dom";
 
@@ -55,6 +56,9 @@ const columns = [
 ];
 
 const EmployeeList = () => {
+  useEffect(() => {
+    document.title = "Current employees";
+  }, []);
   const employees = useSelector((state) => state.employees);
   const data = employees.employees;
   const dispatch = useDispatch();
@@ -93,7 +97,7 @@ const EmployeeList = () => {
       <h1 className={styles.title}>Current Employees</h1>
       <div style={{ position: "relative" }}>
         <div className={styles.search}>
-          <img className={styles.icon} src={Search} alt="" />
+          <img className={styles.icon_search} src={Search} alt="" />
           <input
             className={styles.input}
             type="text"
@@ -108,12 +112,12 @@ const EmployeeList = () => {
           setSelectedRows={setSelectedRows}
         ></Table>
         {records && selectedRows.length > 0 && (
-          <button
+          <img
+            className={styles.icon_trash}
+            src={Trash}
+            alt="trash icon"
             onClick={handleDelete}
-            style={{ position: "absolute", bottom: "20px" }}
-          >
-            Delete
-          </button>
+          />
         )}
       </div>
       <Link to="/" relative="path" className={styles.link}>
