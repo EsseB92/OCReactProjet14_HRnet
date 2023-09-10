@@ -1,7 +1,6 @@
 .container {
-  flex-direction: column;
-  max-width: 500px;
-  margin: 0 auto;
+  width: 500px;
+  margin: 20px;
   padding: 20px;
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgb(255, 255, 255);
@@ -20,7 +19,7 @@
   text-align: center;
   margin-top: 10px;
   text-decoration: none;
-  color: #000eee;
+  color: #007bff;
 }
 
 .subtitle {
@@ -66,14 +65,33 @@
   width: 200px;
 }
 
+.modal {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal_button {
+  width: 100px;
+  padding: 10px;
+}
+.modal_button_yes:hover {
+  background-color: #00ff00;
+  color: #000;
+}
+.modal_button_no:hover {
+  background-color: #ff0000;
+  color: #000;
+}
+
 .submit {
-  display: block;
   align-self: center;
   width: 200px;
   margin-top: 10px;
-  border-radius: 5px;
   padding: 1rem;
-  background-color: #040d12;
-  color: #fff;
-  cursor: pointer;
+}
+
+.submit:hover {
+  background-color: #007bff;
+  color: #000;
 }
