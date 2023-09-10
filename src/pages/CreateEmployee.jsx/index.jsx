@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { InputForm } from "../../components/Form/InputForm";
+import Button from "../../components/Button";
 import IdCard from "../../assets/id-card.svg";
 import LocationDot from "../../assets/location-dot.svg";
 import Briefcase from "../../assets/briefcase.svg";
+import XMark from "../../assets/xmark.svg";
 import { departments } from "../../data/departments";
 import { states } from "../../data/states";
 import { addEmployee } from "../../features/employees/employeesSlice";
 import { useForm, Controller } from "react-hook-form";
+import Modal from "@esseb92/react-modal";
+import { toast } from "react-toastify";
 
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
@@ -23,6 +27,51 @@ const optionsDepartments = departments.map((department) => ({
 }));
 
 const CreateEmployee = () => {
+  useEffect(() => {
+    document.title = "Create employee";
+  }, []);
+  const [openModal, setOpenModal] = useState(false);
+  const formDataRef = useRef(null);
+  const modalConfigurations = {
+    // Global Part
+    closeModal: setOpenModal,
+    maxWidth: "500px",
+    closingBtn: XMark,
+    borderRadius: "8px",
+    // padding: "15px 30px",
+    fontFamily: '"Lato", "Helvetica Neue", arial, sans-serif',
+    // Header Part
+    modalHeader: "Are you sure you want to create this employee?",
+    paddingHeader: "0 30px",
+    // Body Part
+    modalBody: (
+      <div className={styles.modal}>
+        <Button
+          className={`${styles.modal_button} ${styles.modal_button_yes}`}
+          onClick={() => {
+            onAcceptSubmitting();
+            setOpenModal(false);
+          }}
+        >
+          Yes
+        </Button>
+        <Button
+          className={`${styles.modal_button} ${styles.modal_button_no}`}
+          onClick={() => {
+            setOpenModal(false);
+          }}
+        >
+          No
+        </Button>
+      </div>
+    ),
+    colorBody: "#5e6c76",
+    bgColorBody: "white",
+    textAlignBody: "left",
+    fontSizeBody: "18px",
+    paddingBody: "0 0 20px 0",
+  };
+
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees.employees);
 
@@ -33,7 +82,8 @@ const CreateEmployee = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onAcceptSubmitting = async () => {
+    const data = formDataRef.current;
     const id =
       employees.reduce(
         (max, employee) => (employee.id > max ? employee.id : max),
@@ -52,19 +102,44 @@ const CreateEmployee = () => {
       department: data.department.value,
     };
 
-    dispatch(addEmployee(employeeData));
+    try {
+      dispatch(addEmployee(employeeData));
+      toast.success(
+        <p>
+          L'employé{" "}
+          <b>
+            {data.firstName} {data.lastName}
+          </b>{" "}
+          a bien été créé!
+        </p>
+      );
+      reset({
+        firstName: "",
+        lastName: "",
+        birthDate: null,
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        startDate: null,
+        department: "",
+      });
+    } catch (error) {
+      toast.error(
+        <p>
+          L'employé{" "}
+          <b>
+            {data.firstName} {data.lastName}
+          </b>{" "}
+          n'a pas pu être créé! Erreur : {error}
+        </p>
+      );
+    }
+  };
 
-    reset({
-      firstName: "",
-      lastName: "",
-      birthDate: null,
-      street: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      startDate: null,
-      department: "",
-    });
+  const onSubmit = (data) => {
+    formDataRef.current = data;
+    setOpenModal(true);
   };
 
   return (
@@ -98,8 +173,14 @@ const CreateEmployee = () => {
           )}
           rules={{
             required: "First name is required",
-            minLength: 2,
-            maxLength: 255,
+            minLength: {
+              value: 2,
+              message: "First name must be at least 2 characters long",
+            },
+            maxLength: {
+              value: 255,
+              message: "First name cannot exceed 255 characters",
+            },
             pattern: {
               value: /^[a-zA-Z0-9\s\-']+$/,
               message: "Invalid character(s) in first name",
@@ -124,11 +205,17 @@ const CreateEmployee = () => {
           )}
           rules={{
             required: "Last name is required",
-            minLength: 2,
-            maxLength: 255,
+            minLength: {
+              value: 2,
+              message: "Last name must be at least 2 characters long",
+            },
+            maxLength: {
+              value: 255,
+              message: "Last name cannot exceed 255 characters",
+            },
             pattern: {
               value: /^[a-zA-Z0-9\s\-']+$/,
-              message: "Invalid characters in last name",
+              message: "Invalid character(s) in last name",
             },
           }}
         />
@@ -194,11 +281,17 @@ const CreateEmployee = () => {
           )}
           rules={{
             required: "Street is required",
-            minLength: 2,
-            maxLength: 255,
+            minLength: {
+              value: 2,
+              message: "Street must be at least 2 characters long",
+            },
+            maxLength: {
+              value: 255,
+              message: "Street cannot exceed 255 characters",
+            },
             pattern: {
               value: /^[a-zA-Z0-9\s\-',.;"]+$/,
-              message: "Invalid characters in street address",
+              message: "Invalid character(s) in street address",
             },
           }}
         />
@@ -220,11 +313,17 @@ const CreateEmployee = () => {
           )}
           rules={{
             required: "City is required",
-            minLength: 2,
-            maxLength: 255,
+            minLength: {
+              value: 2,
+              message: "City must be at least 2 characters long",
+            },
+            maxLength: {
+              value: 255,
+              message: "City cannot exceed 255 characters",
+            },
             pattern: {
               value: /^[a-zA-Z0-9\s\-',.;"]+$/,
-              message: "Invalid characters in city name",
+              message: "Invalid character(s) in city name",
             },
           }}
         />
@@ -297,8 +396,7 @@ const CreateEmployee = () => {
           rules={{
             required: "Start Date is required",
             pattern: {
-              value:
-                /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/,
+              value: /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(19|20)\d{2}$/,
               message: "Invalid date format (MM/dd/yyyy)",
             },
             validate: (value) => {
@@ -330,10 +428,9 @@ const CreateEmployee = () => {
           <span className={styles.span_error}>{errors.department.message}</span>
         )}
 
-        <button className={styles.submit} type="submit">
-          Save
-        </button>
+        <Button className={styles.submit}>Save</Button>
       </form>
+      {openModal && <Modal {...modalConfigurations} />}
     </div>
   );
 };
