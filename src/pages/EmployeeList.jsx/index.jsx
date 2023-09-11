@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Table from "../../components/Table";
-import styles from "./index.module.css";
+import { Link } from "react-router-dom";
+
 import Search from "../../assets/search.svg";
 import Trash from "../../assets/trash.svg";
+import Table from "../../components/Shared/Table";
 import { deleteEmployees } from "../../features/employees/employeesSlice";
-import { Link } from "react-router-dom";
+
+import styles from "./index.module.css";
 
 const columns = [
   {

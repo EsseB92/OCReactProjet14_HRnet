@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { InputForm } from "../../components/Form/InputForm";
-import Button from "../../components/Button";
-import XMark from "../../assets/xmark.svg";
-import { addEmployee } from "../../features/employees/employeesSlice";
-import EmployeeForm from "../../components/Form/";
 import { useForm, Controller } from "react-hook-form";
-import Modal from "@esseb92/react-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import XMark from "../../assets/xmark.svg";
+import EmployeeForm from "../../components/Employee/Form";
+import Button from "../../components/Shared/Button";
+import { InputForm } from "../../components/Shared/Form/InputForm";
+import { addEmployee } from "../../features/employees/employeesSlice";
+
+import Modal from "@esseb92/react-modal";
+
 import styles from "./index.module.css";
-import { Link } from "react-router-dom";
 
 const CreateEmployee = () => {
-  useEffect(() => {
-    document.title = "Create employee";
-  }, []);
-
   const [openModal, setOpenModal] = useState(false);
   const formDataRef = useRef(null);
+
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.employees.employees);
 
   const modalConfigurations = {
     // Global Part
@@ -26,7 +27,6 @@ const CreateEmployee = () => {
     maxWidth: "500px",
     closingBtn: XMark,
     borderRadius: "8px",
-    // padding: "15px 30px",
     fontFamily: '"Lato", "Helvetica Neue", arial, sans-serif',
     // Header Part
     modalHeader: "Are you sure you want to create this employee?",
@@ -59,9 +59,6 @@ const CreateEmployee = () => {
     fontSizeBody: "18px",
     paddingBody: "0 0 20px 0",
   };
-
-  const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees.employees);
 
   const {
     control,
@@ -129,6 +126,10 @@ const CreateEmployee = () => {
     formDataRef.current = data;
     setOpenModal(true);
   };
+
+  useEffect(() => {
+    document.title = "Create employee - HRnet";
+  }, []);
 
   return (
     <div className={styles.container}>
