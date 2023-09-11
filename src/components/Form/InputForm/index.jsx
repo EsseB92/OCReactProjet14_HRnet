@@ -33,6 +33,7 @@ export const InputForm = ({
       case "select":
         return (
           <Select
+            inputId={id}
             value={value}
             options={options}
             onChange={onChange}
@@ -50,6 +51,7 @@ export const InputForm = ({
         return (
           <div className={styles.date_container}>
             <DatePicker
+              id={id}
               wrapperClassName={styles.date_wrapper}
               className={styles.date}
               dateFormat="MM/dd/yyyy"
