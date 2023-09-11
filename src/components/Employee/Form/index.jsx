@@ -1,14 +1,14 @@
 import React from "react";
 
-import Button from "../Button";
-import { InputForm } from "../../components/Form/InputForm";
+import Button from "../../Shared/Button";
+import { InputForm } from "../../Shared/Form/InputForm";
 
-import { departments } from "../../data/departments";
-import { states } from "../../data/states";
+import { departments } from "../../../data/departments";
+import { states } from "../../../data/states";
 
-import Briefcase from "../../assets/briefcase.svg";
-import IdCard from "../../assets/id-card.svg";
-import LocationDot from "../../assets/location-dot.svg";
+import Briefcase from "../../../assets/briefcase.svg";
+import IdCard from "../../../assets/id-card.svg";
+import LocationDot from "../../../assets/location-dot.svg";
 
 import styles from "./index.module.css";
 
@@ -32,7 +32,13 @@ const EmployeeForm = ({
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.title_container}>
-        <img className={styles.image_title} src={IdCard} alt="" />
+        <img
+          className={styles.image_title}
+          src={IdCard}
+          alt="Id Card image"
+          width={20}
+          height={20}
+        />
         <h3 className={styles.title}>Identity</h3>
       </div>
 
@@ -143,7 +149,13 @@ const EmployeeForm = ({
       <hr className={styles.hr}></hr>
 
       <div className={styles.title_container}>
-        <img className={styles.image_title} src={LocationDot} alt="" />
+        <img
+          className={styles.image_title}
+          src={LocationDot}
+          alt="Location Dot image"
+          width={20}
+          height={20}
+        />
         <h3 className={styles.title}>Address</h3>
       </div>
 
@@ -261,7 +273,13 @@ const EmployeeForm = ({
       <hr className={styles.hr}></hr>
 
       <div className={styles.title_container}>
-        <img className={styles.image_title} src={Briefcase} alt="" />
+        <img
+          className={styles.image_title}
+          src={Briefcase}
+          alt="briefcase image"
+          width={20}
+          height={20}
+        />
         <h3 className={styles.title}>Employement</h3>
       </div>
 

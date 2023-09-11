@@ -1,8 +1,9 @@
 import React from "react";
-//import PropTypes from "prop-types";
-import Select from "react-select";
 import DatePicker from "react-datepicker";
-import Calendar from "../../../assets/calendar.svg";
+import Select from "react-select";
+
+import Calendar from "../../../../assets/calendar.svg";
+
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./index.module.css";
 
@@ -59,7 +60,13 @@ export const InputForm = ({
               onChange={onChange}
               placeholderText={placeholder}
             />
-            <img className={styles.image} src={Calendar} alt="" />
+            <img
+              className={styles.image}
+              src={Calendar}
+              alt="calendar image"
+              width={20}
+              height={20}
+            />
           </div>
         );
       default:
