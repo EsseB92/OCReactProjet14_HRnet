@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, { useCallback } from "react";
 
-export const Table = ({ columns, data, setSelectedRows }) => {
+const Table = ({ columns, data, setSelectedRows }) => {
   const handleRowSelected = useCallback(
     (state) => {
       setSelectedRows(state.selectedRows);
@@ -11,12 +11,12 @@ export const Table = ({ columns, data, setSelectedRows }) => {
 
   return (
     <DataTable
-      highlightOnHover
-      selectableRowsHighlight
       columns={columns}
       data={data}
-      selectableRows
+      highlightOnHover
       onSelectedRowsChange={handleRowSelected}
+      selectableRows
+      selectableRowsHighlight
       pagination
       responsive
     />

@@ -4,58 +4,11 @@ import { Link } from "react-router-dom";
 
 import Search from "../../assets/search.svg";
 import Trash from "../../assets/trash.svg";
+import { tableColumns } from "../../data/tableColumns";
 import Table from "../../components/Shared/Table";
 import { deleteEmployees } from "../../features/employees/employeesSlice";
 
 import styles from "./index.module.css";
-
-const columns = [
-  {
-    name: "First Name",
-    selector: (row) => row.firstName,
-    sortable: true,
-  },
-  {
-    name: "Last Name",
-    selector: (row) => row.lastName,
-    sortable: true,
-  },
-  {
-    name: "Date of Birth",
-    selector: (row) => row.birthDate,
-    sortable: true,
-  },
-  {
-    name: "Street",
-    selector: (row) => row.street,
-    sortable: true,
-  },
-  {
-    name: "City",
-    selector: (row) => row.city,
-    sortable: true,
-  },
-  {
-    name: "State",
-    selector: (row) => row.state,
-    sortable: true,
-  },
-  {
-    name: "Zip Code",
-    selector: (row) => row.zipCode,
-    sortable: true,
-  },
-  {
-    name: "Start Date",
-    selector: (row) => row.startDate,
-    sortable: true,
-  },
-  {
-    name: "Department",
-    selector: (row) => row.department,
-    sortable: true,
-  },
-];
 
 const EmployeeList = () => {
   useEffect(() => {
@@ -65,7 +18,7 @@ const EmployeeList = () => {
   const data = employees.employees;
   const dispatch = useDispatch();
 
-  const [records, setRecords] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleFilter = (event) => {
@@ -78,28 +31,25 @@ const EmployeeList = () => {
       return employeeDataString.includes(searchText);
     });
 
-    setRecords(newData);
+    setFilteredData(newData);
   };
 
   const handleDelete = (event) => {
     event.preventDefault();
     dispatch(deleteEmployees(selectedRows.map((employee) => employee.id)));
+    setSelectedRows([]);
   };
 
   useEffect(() => {
-    setRecords(data);
-  }, [data]);
-
-  useEffect(() => {
-    setRecords(data);
+    setFilteredData(data);
   }, [data]);
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Current Employees</h1>
-      <div style={{ position: "relative" }}>
+      <div className={styles.table}>
         <div className={styles.search}>
-          <img className={styles.icon_search} src={Search} alt="" />
+          <img className={styles.icon_search} src={Search} alt="Search icon" />
           <input
             className={styles.input}
             type="text"
@@ -109,11 +59,11 @@ const EmployeeList = () => {
         </div>
 
         <Table
-          columns={columns}
-          data={records}
+          columns={tableColumns}
+          data={filteredData}
           setSelectedRows={setSelectedRows}
         ></Table>
-        {records && selectedRows.length > 0 && (
+        {filteredData.length > 0 && selectedRows.length > 0 && (
           <img
             className={styles.icon_trash}
             src={Trash}
@@ -122,7 +72,7 @@ const EmployeeList = () => {
           />
         )}
       </div>
-      <Link to="/" relative="path" className={styles.link}>
+      <Link to="/" className={styles.link}>
         Create an employee
       </Link>
     </div>
