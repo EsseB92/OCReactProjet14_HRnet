@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "../../Shared/Button";
-import { InputForm } from "../../Shared/Form/InputForm";
+import InputForm from "../../Shared/Form/InputForm";
 
 import { departments } from "../../../data/departments";
 import { states } from "../../../data/states";
@@ -237,6 +237,7 @@ const EmployeeForm = ({
             value={field.value}
             onChange={field.onChange}
             autocomplete="address-level1"
+            placeholder="Select..."
           />
         )}
         rules={{ required: "State is required" }}
@@ -324,6 +325,7 @@ const EmployeeForm = ({
             value={field.value}
             onChange={field.onChange}
             options={optionsDepartments}
+            placeholder="Select..."
           />
         )}
         rules={{ required: "Department is required" }}
